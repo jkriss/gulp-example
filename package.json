@@ -1,5 +1,5 @@
 {
-  "name": "gulp-test",
+  "name": "gulp-example",
   "version": "0.0.0",
   "dependencies": {
     "brfs": "^1.2.0",
