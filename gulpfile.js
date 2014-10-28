@@ -21,15 +21,11 @@ gulp.task('watch', function() {
 });
 
 gulp.task('scripts', function() {
-    // Single entry point to browserify
     return gulp.src('src/index.js')
         .pipe(browserify({
-          // transform: ['cssify'],
-          // insertGlobals : true,
           nobuiltins: 'buffer',
           debug : false
         }))
-        // .pipe(uglify())
         .pipe(gulp.dest('./dist-scripts'))
 });
 
