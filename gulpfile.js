@@ -8,12 +8,13 @@ var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
 var inlinesource = require('gulp-inline-source');
 var htmlmin = require('gulp-htmlmin');
-var path = require('path')
+var sass = require('gulp-sass');
 
 gulp.task('watch', function() {
 
+  // these all trigger buildPages because we're inlining everything
   gulp.watch('pages/*.html', ['buildPages']);
-  gulp.watch('styles/*.css', ['buildPages']);
+  gulp.watch('styles/*.scss', ['buildPages']);
   gulp.watch('templates/*.html', ['buildPages']);
   gulp.watch('src/*.js', ['buildPages']);
 
@@ -32,7 +33,13 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('./dist-scripts'))
 });
 
-gulp.task('buildPages', ['scripts'], function() {
+gulp.task('sass', function () {
+    gulp.src('styles/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./css'));
+});
+
+gulp.task('buildPages', ['scripts', 'sass'], function() {
   var options = {
       layout: fs.readFileSync('templates/default.html').toString()
   };
@@ -46,7 +53,7 @@ gulp.task('buildPages', ['scripts'], function() {
 });
 
 
-gulp.task('build', ['scripts', 'buildPages']);
+gulp.task('build', ['buildPages']);
 
 
 module.exports = gulp;
